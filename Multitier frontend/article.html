@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Article Detail</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav {
+        background: #1f2937;
+        color: #fff;
+        padding: 1rem 2rem;
+      }
+
+      main {
+        flex: 1;
+        max-width: 600px;
+        margin: 2rem auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      img {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+      }
+
+      .meta {
+        font-size: 0.9rem;
+        color: #065f46;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        margin: 0 0 1rem;
+        color: #111827;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #374151;
+        line-height: 1.6;
+      }
+
+      footer {
+        background: #1f2937;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <h1>My Articles</h1>
+    </nav>
+
+    <main id="article-detail">Loading...</main>
+
+    <footer>© 2025 My Blog</footer>
+
+    <script>
+      const API_BASE = "http://localhost:8000/api/v1/articles";
+
+      // get ?id= from URL
+      const params = new URLSearchParams(window.location.search);
+      const articleId = params.get("id");
+
+      if (!articleId) {
+        document.getElementById("article-detail").innerHTML =
+          "<p>Article not found</p>";
+      } else {
+        fetch(`${API_BASE}/${articleId}/`)
+          .then((res) => res.json())
+          .then((article) => {
+            document.getElementById("article-detail").innerHTML = `
+              <img src="${article.image}" alt="${article.title}" />
+              <div class="meta">
+                ${article.readtime} min read • 
+                ${new Date(article.published_on).toDateString()}
+              </div>
+              <h1>${article.title}</h1>
+              <p>${article.articleParagrah}</p>
+            `;
+          })
+          .catch(() => {
+            document.getElementById("article-detail").innerHTML =
+              "<p>Error loading article</p>";
+          });
+      }
+    </script>
+  </body>
+</html>

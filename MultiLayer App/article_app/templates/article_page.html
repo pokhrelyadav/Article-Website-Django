@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %} Articles Page {% endblock %}
+
+{% block logoName %} Pokhrel | Articles {% endblock %}
+{% block heading1 %}Latest Trends in Information and Technology{% endblock %}
+{% block headingcontent %}Here are some of our latest articles on various topics. Enjoy reading!{% endblock %}
+
+{% block content %}
+
+   <div id="article-cards">
+  {% for article in allarticles %}
+    <div class="mycard">
+      <a href="{% url 'get-one-article-by-id' article.id %}">
+        <div class='card-image-section'>
+          <img src="{{article.image.url}}" alt="{{article.title}}" />
+        </div>
+        <div class='card-text-section'>
+          <div class='flex items-center gap-2  text-green-950 mb-2'>
+            <span>{{article.readtime}} min read</span>
+            <span>•</span>
+            <span>{{article.published_on|date:"M d, Y"}}</span>
+          </div>
+          <h3 class='font-bold text-lg text-gray-900 mb-2'>{{article.title}}</h3>
+          <p class='text-sm text-gray-600'>{{article.short_description}}</p>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

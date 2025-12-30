@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Articles</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+      }
+
+      /* NAVBAR */
+      nav {
+        background: #1f2937;
+        color: #fff;
+        padding: 1rem 2rem;
+      }
+
+      nav h1 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      /* CARDS CONTAINER */
+      #article-cards {
+        flex: 1 0 auto;
+        max-width: 1100px;
+        margin: 2rem auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 0 1rem;
+      }
+
+      /* CARD */
+      .mycard {
+        background: #fff;
+        border-radius: 6px;
+        max-height: 400px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+      }
+
+      .mycard:hover {
+        transform: translateY(-4px);
+      }
+
+      .mycard a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .card-image-section img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .card-text-section {
+        padding: 1rem;
+      }
+
+      .meta {
+        font-size: 0.8rem;
+        color: #065f46;
+        margin-bottom: 0.5rem;
+      }
+
+      .meta span {
+        margin-right: 0.5rem;
+      }
+
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        color: #111827;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: #4b5563;
+        margin: 0;
+      }
+
+      /* FOOTER */
+      footer {
+        background: #1f2937;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <h1>My Articles</h1>
+    </nav>
+
+    <!-- CARDS -->
+    <div id="article-cards"></div>
+
+    <!-- FOOTER -->
+    <footer>© 2025 My Blog</footer>
+
+    <!-- JS -->
+    <script>
+      const API_URL = "http://localhost:8000/api/v1/articles";
+
+      fetch(API_URL)
+        .then((res) => res.json())
+        .then((data) => {
+          const container = document.getElementById("article-cards");
+
+          data.forEach((article) => {
+            const card = document.createElement("div");
+            card.className = "mycard";
+
+            card.innerHTML = `
+            <a href="article.html?id=${article.id}">
+              <div class="card-image-section">
+                <img src="${article.image}" alt="${article.title}">
+              </div>
+              <div class="card-text-section">
+                <div class="meta">
+                  <span>${article.readtime} min read</span>
+                  <span>•</span>
+                  <span>${new Date(article.published_on).toDateString()}</span>
+                </div>
+                <h3>${article.title}</h3>
+                <p>${article.short_description}</p>
+              </div>
+            </a>
+          `;
+
+            container.appendChild(card);
+          });
+        })
+        .catch((err) => {
+          console.error("Error loading articles:", err);
+        });
+    </script>
+  </body>
+</html>
