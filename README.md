@@ -16,8 +16,11 @@ Make sure the following tools are installed on your system:
 - `uv` (Python package manager).
 - Run below command to get uv. It is best alternative of **pip venv**.
 
-````bash
-run pip install uv. uv is the best virtual env management tool alternative of pip venv.
+```bash
+pip install uv
+```
+
+---
 ---
 
 ## Project Setup Instructions
@@ -26,7 +29,7 @@ run pip install uv. uv is the best virtual env management tool alternative of pi
 
 ```bash
 git clone https://github.com/pokhrelyadav/Article-Website-Django.git
-````
+```
 
 ---
 
