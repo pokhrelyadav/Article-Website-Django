@@ -21,6 +21,7 @@ pip install uv
 ```
 
 ---
+
 ---
 
 ## Project Setup Instructions
@@ -54,6 +55,7 @@ uv venv
 
 ```bash
 uv pip install -r requirements.txt
+npm install --prefix theme/static_src
 ```
 
 ---
